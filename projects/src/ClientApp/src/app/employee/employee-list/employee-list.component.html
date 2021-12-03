@@ -1,0 +1,69 @@
+<div class="card">
+    <div class="card-header">
+        {{pageTitle}}
+    </div>
+    <div class="card-body">
+        <div class="row" style="margin-bottom:15px;">
+            <div class="col-md-2">Search Name:</div>
+            <div class="col-md-4">
+                <input type="text" [(ngModel)]="listFilter" />
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-4">
+                <button class="btn btn-primary mr-3" [routerLink]="['/employees/0/edit']">
+                    New Employee
+                </button>
+            </div>
+        </div>
+        <div class="row" *ngIf="listFilter">
+            <div class="col-md-6">
+                <h4>All name with: {{listFilter}}</h4>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table mb-0" *ngIf="employees && employees.length">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Department</th>
+                        <th>Designation</th>
+                        <th>gender</th>
+                        <th>Join Date</th>
+                        <th>PhoneNumber</th>
+                        <th></th>  
+                        <th></th>  
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of filteredEmployees">
+                        <td>
+                            <a [routerLink]="['/employees', employee.employeeId]">
+                                {{ employee.employeeName }}
+                            </a>
+                        </td>
+                        <td>{{ employee.department }}</td>
+                        <td>{{ employee.designation }}</td>
+                        <td>{{ employee.gender }}</td>
+                        <td>{{ employee.joinDate }}</td>
+                        <td>{{ employee.phoneNumber}} </td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm"
+                                [routerLink]="['/employees', employee.employeeId, 'edit']">
+                                Edit
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-outline-warning btn-sm"
+                                (click)="deleteEmployee(employee.employeeId, employee.employeeName);">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div *ngIf="errorMessage" class="alert alert-danger">
+    Error: {{ errorMessage }}
+</div>
